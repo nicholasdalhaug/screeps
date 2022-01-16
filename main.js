@@ -8,6 +8,9 @@ const main = () => {
             harvesterIteration(creep)
         }
     }
+
+    const spawn = Game.spawns["Spawn1"]
+    spawn.createCreep([MOVE, WORK, WORK, CARRY], undefined, {role: "harvester"})
 }
 
 module.exports.loop = function(){
