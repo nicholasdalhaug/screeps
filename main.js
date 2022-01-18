@@ -19,7 +19,7 @@ const main = () => {
     const nUpgradersCurrent = creeps.filter(creep => creep.memory.role == "upgrader").length
     const spawn = Game.spawns["Spawn1"]
     if (nHarvestersCurrent < nHarvestersDesired) {
-        spawn.createCreep([MOVE, WORK, WORK, CARRY], undefined, {role: "harvester"})
+        spawn.createCreep([MOVE, WORK, WORK, CARRY], undefined, {role: "harvester", state: "gathering"})
     }
     if (nUpgradersCurrent < nUpgradersDesired) {
         spawn.createCreep([MOVE, WORK, WORK, CARRY], undefined, {role: "upgrader", state: "gathering"})
