@@ -1,6 +1,8 @@
 let { harvesterIteration } = require("./creeps.harvester")
+let { upgraderIteration } = require("./creeps.upgrader")
 
 const nHarvestersDesired = 4
+const nUpgradersDesired = 1
 
 const main = () => {
     const creeps = Object.keys(Game.creeps).map(creepName => Game.creeps[creepName])
@@ -8,12 +10,19 @@ const main = () => {
         if(creep.memory.role == 'harvester') {
             harvesterIteration(creep)
         }
+        if(creep.memory.role == 'upgrader') {
+            upgraderIteration(creep)
+        }
     })
 
     const nHarvestersCurrent = creeps.filter(creep => creep.memory.role == "harvester").length
+    const nUpgradersCurrent = creeps.filter(creep => creep.memory.role == "upgrader").length
+    const spawn = Game.spawns["Spawn1"]
     if (nHarvestersCurrent < nHarvestersDesired) {
-        const spawn = Game.spawns["Spawn1"]
         spawn.createCreep([MOVE, WORK, WORK, CARRY], undefined, {role: "harvester"})
+    }
+    if (nUpgradersCurrent < nUpgradersDesired) {
+        spawn.createCreep([MOVE, WORK, WORK, CARRY], undefined, {role: "upgrader", state: "gathering"})
     }
 }
 
