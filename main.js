@@ -1,7 +1,7 @@
 let { harvesterIteration } = require("./creeps.harvester")
 let { upgraderIteration } = require("./creeps.upgrader")
 
-const nHarvestersDesired = 4
+const nHarvestersDesired = 3
 const nUpgradersDesired = 1
 
 const main = () => {
@@ -21,7 +21,7 @@ const main = () => {
     if (nHarvestersCurrent < nHarvestersDesired) {
         spawn.createCreep([MOVE, WORK, WORK, CARRY], undefined, {role: "harvester", state: "gathering"})
     }
-    if (nUpgradersCurrent < nUpgradersDesired) {
+    else if (nUpgradersCurrent < nUpgradersDesired) {
         spawn.createCreep([MOVE, WORK, WORK, CARRY], undefined, {role: "upgrader", state: "gathering"})
     }
 }
