@@ -15,8 +15,18 @@ const upgraderIteration = function(creep){
     else if(creep.memory.state == "working"){
         if(creep.store.getUsedCapacity() > 0) {
             const controller = creep.room.controller
-            if(creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
-                creep.moveTo(controller, MOVE_OPTIONS);
+            const repairableStructures = creep.room.find(FIND_STRUCTURES)
+                .filter(s => s.hits < s.hitsMax)
+            if(repairableStructures.length > 0){
+                const repairableStructure = repairableStructures[0]
+                if(creep.repair(repairableStructure) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(repairableStructure, MOVE_OPTIONS);
+                }
+            }
+            else {
+                if(creep.upgradeController(controller) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(controller, MOVE_OPTIONS);
+                }
             }
         }
         else{
