@@ -15,6 +15,9 @@ const harvesterIteration = function(creep){
     else if(creep.memory.state == "working"){
         if(creep.store.getUsedCapacity() > 0){
             const spawn = Game.spawns["Spawn1"]
+            const notFullExtensions = creep.room.find(FIND_STRUCTURES)
+                .filter(s => s.structureType == STRUCTURE_EXTENSION)
+                .filter(e => e.store.getFreeCapacity(RESOURCE_ENERGY) > 0)
             const constructionSites = creep.room.find(FIND_CONSTRUCTION_SITES)
             const notFullContainers = creep.room.find(FIND_STRUCTURES)
                 .filter(s => s.structureType == STRUCTURE_CONTAINER)
@@ -22,6 +25,12 @@ const harvesterIteration = function(creep){
             if(spawn.store.getFreeCapacity("energy") > 0){
                 if(creep.transfer(spawn, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(spawn, MOVE_OPTIONS);
+                }
+            }
+            else if(notFullExtensions.length > 0 ){
+                const notFullExtension = notFullExtensions[0]
+                if(creep.transfer(notFullExtension, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+                    creep.moveTo(notFullExtension, MOVE_OPTIONS);
                 }
             }
             else if(constructionSites.length > 0) {

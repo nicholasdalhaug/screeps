@@ -1,7 +1,7 @@
 let { harvesterIteration } = require("./creeps.harvester")
 let { upgraderIteration } = require("./creeps.upgrader")
 
-const nHarvestersDesired = 3
+const nHarvestersDesired = 4
 const nUpgradersDesired = 1
 
 const main = () => {
