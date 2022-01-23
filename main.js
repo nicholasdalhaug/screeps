@@ -1,10 +1,20 @@
 let { harvesterIteration } = require("./creeps.harvester")
 let { upgraderIteration } = require("./creeps.upgrader")
 
+const removeDeadCreepsFromMemory = () => {
+    for(let memCreepName in Memory.creeps){
+        if(Game.creeps[memCreepName] == undefined){
+            delete Memory.creeps[memCreepName]
+        }
+    }
+}
+
 const nHarvestersDesired = 4
 const nUpgradersDesired = 1
 
 const main = () => {
+    removeDeadCreepsFromMemory()
+
     const creeps = Object.keys(Game.creeps).map(creepName => Game.creeps[creepName])
     creeps.forEach(creep => {
         if(creep.memory.role == 'harvester') {
