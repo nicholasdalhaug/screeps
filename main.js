@@ -50,10 +50,19 @@ const createCreep = (role) => {
     
     const creepUUID = createUUID()
     const creepName = `${role}${creepUUID}`
+    const creepBody = calcCreepBody()
 
-    spawn.createCreep([WORK, WORK, MOVE, CARRY], creepName, 
+    spawn.createCreep(creepBody, creepName, 
         {role, state: "gathering"}
     )
+}
+
+const calcCreepBody = () => {
+    const energyAvailable = Game.spawns.Spawn1.room.energyAvailable
+    const energyAvailableForWork = energyAvailable - BODYPART_COST[MOVE] - BODYPART_COST[CARRY]
+    const nWork = Math.max(1, Math.floor(energyAvailableForWork / BODYPART_COST[WORK]))
+
+    return [...(Array(nWork).fill(WORK)), MOVE, CARRY]
 }
 
 const createUUID = () => {
